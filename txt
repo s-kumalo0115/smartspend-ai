@@ -1,0 +1,5 @@
+        <!-- AVATAR -->
+        <div class="avatar-upload">
+            <img id="avatarPreview" src="{{ url_for('static', filename='img/default-avatar.png') }}">
+            <input type="file" id="avatarInput" accept="image/*">
+        </div>
