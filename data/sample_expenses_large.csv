@@ -1,0 +1,28 @@
+date,amount,category,description
+2024-01-01,120,Food,Groceries
+2024-01-03,50,Transport,Bus ticket
+2024-01-05,250,Transport,Uber
+2024-01-08,600,Rent,Monthly rent
+2024-01-12,90,Entertainment,Movies
+2024-01-15,150,Food,Restaurant
+2024-01-18,75,Shopping,Books
+2024-01-20,400,Utilities,Electricity
+2024-01-22,300,Health,Gym
+2024-01-25,200,Shopping,Clothes
+2024-02-01,130,Food,Groceries
+2024-02-05,260,Transport,Taxi
+2024-02-10,95,Entertainment,Concert
+2024-02-14,150,Food,Restaurant
+2024-02-18,80,Shopping,Books
+2024-02-20,420,Utilities,Electricity
+2024-02-25,250,Shopping,Clothes
+2024-03-01,140,Food,Groceries
+2024-03-05,270,Transport,Uber
+2024-03-08,620,Rent,Monthly rent
+2024-03-12,100,Entertainment,Movies
+2024-03-15,160,Food,Restaurant
+2024-03-20,450,Utilities,Electricity
+2024-03-22,310,Health,Gym
+2024-03-25,150,Shopping,Books
+2024-03-28,180,Food,Groceries
+2024-03-30,50,Transport,Bus
