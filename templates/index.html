@@ -54,6 +54,13 @@
          <input type="file" name="file" id="fileInput" required>
          <button type="submit" id="analyzeBtn">Analyze Spending</button>
        </form>
+        
+
+       <div class="sample-upload">
+    <button type="button" id="sampleCsvBtn">
+        Use Sample CSV
+    </button>
+</div>
 
 
         <!-- CORE FEATURES -->
@@ -247,5 +254,31 @@ uploadForm.addEventListener("submit", (e) => {
     }
 });
 </script>
+
+<script>
+document.getElementById("sampleCsvBtn").addEventListener("click", async () => {
+    const response = await fetch("/data/uploads/sample_expenses_large.csv");
+    const blob = await response.blob();
+
+    const file = new File([blob], "sample_expenses_large.csv", {
+        type: "text/csv"
+    });
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    fetch("/upload", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.text())
+    .then(html => {
+        document.open();
+        document.write(html);
+        document.close();
+    });
+});
+</script>
+
 </body>
 </html>
