@@ -12,20 +12,20 @@
 </head>
 <body>
   <header class="topbar reveal-down">
-    <div class="topbar-left">
+    <h2 class="dashboard-title">Profile Settings</h2>
+    <div class="topbar-nav">
       <a href="/" class="home-btn" id="homeLink"><i class="fa-solid fa-house"></i> Home</a>
-      <h2 class="dashboard-title">Profile Settings</h2>
-    </div>
-    <div class="topbar-actions">
-      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
-      <div class="profile-wrapper" id="profileWrapper">
-        <button class="profile-btn" id="profileToggle" aria-label="Open profile menu">
-          <img id="avatarPreview" src="/static/images/anonymous-avatar.svg" alt="Profile avatar" />
-        </button>
-        <div class="profile-dropdown hidden" id="profileDropdown">
-          <div class="dropdown-header"><strong id="navName">User</strong></div>
-          <a href="/profile" id="profileLink">Your Profile</a>
-          <a href="#" id="logoutBtn">Sign Out</a>
+      <div class="topbar-actions">
+        <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
+        <div class="profile-wrapper" id="profileWrapper">
+          <button class="profile-btn" id="profileToggle" aria-label="Open profile menu">
+            <img id="avatarPreview" src="/static/images/anonymous-avatar.svg" alt="Profile avatar" />
+          </button>
+          <div class="profile-dropdown hidden" id="profileDropdown">
+            <div class="dropdown-header"><strong id="navName">User</strong></div>
+            <a href="/profile" id="profileLink">Your Profile</a>
+            <a href="#" id="logoutBtn">Sign Out</a>
+          </div>
         </div>
       </div>
     </div>

@@ -86,6 +86,12 @@ body {
   flex-wrap: wrap;
   gap: 10px;
 }
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
 .nav-link {
   display: inline-flex;
   align-items: center;
@@ -184,6 +190,7 @@ body {
   align-items: center;
 }
 .hero-actions { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.hero-actions .sample-download-btn { text-align: center; justify-content: center; margin-inline: auto; }
 .upload-form input[type=file], .avatar-upload input[type=file] {
   width: 100%;
   border-radius: 10px;
@@ -360,8 +367,9 @@ body {
 .profile-dropdown a:hover { background: var(--surface-2); }
 
 /* DASHBOARD */
-.topbar { margin-top: 20px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-.topbar-left, .topbar-actions { display: flex; align-items: center; gap: 10px; }
+.topbar { margin-top: 20px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 12px; display: grid; grid-template-columns: 1fr; gap: 12px; }
+.topbar-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
 .dashboard-title { margin: 0; font-size: clamp(1rem, 2vw, 1.35rem); }
 
 .insights-panel { margin-top: 12px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 14px 16px; }
@@ -527,6 +535,7 @@ body {
 
 @media (max-width: 1120px) {
   .navbar { grid-template-columns: 1fr; justify-items: center; row-gap: 10px; }
+  .nav-row { width: 100%; justify-content: center; }
   .hero-intro { grid-template-columns: 1fr; }
   .upload-form { grid-template-columns: 1fr 1fr; }
   .upload-form input[type=file] { grid-column: span 2; }
@@ -537,20 +546,62 @@ body {
 }
 
 @media (max-width: 720px) {
-  .navbar { padding-inline: 12px; }
-  .hero-intro { gap: 12px; }
-  .hero-visual { min-height: 210px; }
-  .upload-form-wrap { padding: 12px; }
-  .hero, .info-section, .topbar, .insights-panel, .dashboard, .app-footer, .profile-page { width: calc(100% - 14px); }
-  .brand { font-size: 1.08rem; }
-  .nav-center { justify-content: center; }
-  .nav-link { width: 100%; justify-content: center; }
-  .topbar, .topbar-left, .topbar-actions { flex-wrap: wrap; }
+  .navbar {
+    padding-inline: 10px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "brand"
+      "row";
+    row-gap: 8px;
+  }
+  .brand { grid-area: brand; justify-self: center; font-size: .96rem; }
+  .nav-row {
+    grid-area: row;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .nav-center { justify-content: flex-start; gap: 6px; flex-wrap: nowrap; }
+  .nav-right { gap: 6px; flex-wrap: nowrap; }
+  .nav-link { width: auto; justify-content: center; white-space: nowrap; font-size: .7rem; padding: 7px 9px; }
+  .theme-toggle { width: 34px; height: 34px; }
+  .signin-btn { padding: 7px 10px; font-size: .7rem; }
+  .profile-btn { width: 34px; height: 34px; }
+
+  .hero-intro { gap: 10px; }
+  .hero-visual { min-height: 190px; }
+  .upload-form-wrap { padding: 11px; }
+  .hero, .info-section, .topbar, .insights-panel, .dashboard, .app-footer, .profile-page { width: calc(100% - 12px); }
+
+  .topbar { gap: 10px; }
+  .dashboard-title { text-align: center; width: 100%; font-size: 1.2rem; }
+  .topbar-nav {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 6px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .topbar-actions { justify-content: flex-start; gap: 6px; flex-wrap: nowrap; }
+  .topbar .home-btn,
+  .topbar #saveAnalysisBtn {
+    width: auto;
+    white-space: nowrap;
+    font-size: .73rem;
+    padding: 8px 11px;
+  }
+
   .grid-3, .grid-2, .contact-grid { grid-template-columns: 1fr; }
   .upload-form { grid-template-columns: 1fr; }
-  .upload-form input[type=file], .btn, .signin-btn, .sample-download-btn, .auth-submit, #profile-submit, .home-btn { width: 100%; }
-  .profile-card { padding: 20px 14px; }
-  #profileForm { width: 100%; gap: 10px; }
+  .upload-form input[type=file], .btn, .signin-btn, .sample-download-btn, .auth-submit, #profile-submit { width: 100%; }
+  .hero-actions .sample-download-btn { width: min(280px, 100%); }
+  .profile-card { padding: 16px 11px; }
+  #profileForm { width: 100%; gap: 9px; }
   .kpi, .chart { grid-column: span 12; }
   .chart { min-height: 280px; }
   .chart canvas { height: 220px !important; }
