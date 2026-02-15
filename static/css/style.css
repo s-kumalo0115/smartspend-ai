@@ -35,7 +35,7 @@ body[data-theme="light"] {
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; }
 body {
   margin: 0;
   min-height: 100vh;
@@ -45,12 +45,13 @@ body {
     radial-gradient(circle at 12% -6%, rgba(89,173,255,.22), transparent 42%),
     radial-gradient(circle at 88% 8%, rgba(126,97,255,.24), transparent 45%),
     linear-gradient(180deg, var(--bg), var(--bg-soft));
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 .hidden { display: none !important; }
 
 .section-wrap, .hero, .info-section, .topbar, .insights-panel, .dashboard, .profile-page, .app-footer {
   width: min(1320px, calc(100% - 28px));
+  max-width: 100%;
   margin-inline: auto;
 }
 
@@ -357,7 +358,7 @@ body {
 .profile-btn img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; animation: avatarFloat 2.4s ease-in-out infinite; }
 @keyframes avatarFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-2px) scale(1.03)} }
 .profile-dropdown {
-  position: absolute; right: 0; top: 48px; min-width: 220px; border-radius: 14px;
+  position: absolute; right: 0; top: 48px; min-width: 220px; border-radius: 14px; pointer-events: auto;
   background: linear-gradient(165deg, color-mix(in oklab, var(--surface), #fff 4%), color-mix(in oklab, var(--surface-2), #fff 2%));
   border: 1px solid color-mix(in oklab, var(--blue), var(--border)); box-shadow: var(--shadow); z-index: 240;
   opacity: 0; transform: translateY(-6px); transition: opacity .2s ease, transform .2s ease;
@@ -561,18 +562,31 @@ body {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
+    justify-content: space-between;
+    gap: 5px;
     flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 3px;
+    overflow: hidden;
+    padding-bottom: 2px;
   }
-  .nav-center { justify-content: flex-start; gap: 8px; flex-wrap: nowrap; }
-  .nav-right { gap: 8px; flex-wrap: nowrap; flex-shrink: 0; }
-  .nav-link { width: auto; justify-content: center; white-space: nowrap; font-size: .74rem; padding: 8px 10px; }
-  .theme-toggle { width: 36px; height: 36px; }
-  .signin-btn { padding: 8px 11px; font-size: .74rem; }
-  .profile-btn { width: 40px; height: 40px; }
+  .nav-center {
+    justify-content: flex-start;
+    gap: 5px;
+    flex-wrap: nowrap;
+    flex: 1;
+    min-width: 0;
+  }
+  .nav-right { gap: 5px; flex-wrap: nowrap; flex-shrink: 0; }
+  .nav-link {
+    width: auto;
+    justify-content: center;
+    white-space: nowrap;
+    font-size: .67rem;
+    padding: 7px 7px;
+    min-width: 0;
+  }
+  .theme-toggle { width: 35px; height: 35px; }
+  .signin-btn { padding: 7px 9px; font-size: .68rem; }
+  .profile-btn { width: 42px; height: 42px; }
 
   .hero-intro { gap: 10px; }
   .hero-visual { min-height: 190px; }
@@ -583,12 +597,12 @@ body {
   .dashboard-title { text-align: center; width: 100%; font-size: 1.2rem; }
   .topbar-nav {
     width: 100%;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 6px;
     flex-wrap: nowrap;
-    overflow-x: auto;
+    overflow: hidden;
   }
-  .topbar-actions { justify-content: flex-start; gap: 6px; flex-wrap: nowrap; }
+  .topbar-actions { justify-content: flex-end; gap: 6px; flex-wrap: nowrap; }
   .topbar .home-btn {
     width: auto;
     white-space: nowrap;

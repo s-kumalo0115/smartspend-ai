@@ -93,10 +93,13 @@
     if (avatarPreview) avatarPreview.src = profile.avatar || "/static/images/anonymous-avatar.svg";
 
     if (profileToggle && profileDropdown) {
-      profileToggle.addEventListener("click", (e) => {
+      const toggleDropdown = (e) => {
+        e.preventDefault();
         e.stopPropagation();
         profileDropdown.classList.toggle("hidden");
-      });
+      };
+      profileToggle.addEventListener("pointerup", toggleDropdown);
+      profileToggle.addEventListener("click", (e) => e.preventDefault());
       document.addEventListener("click", () => profileDropdown.classList.add("hidden"));
     }
 
