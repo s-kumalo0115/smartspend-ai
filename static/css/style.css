@@ -193,7 +193,8 @@ body {
   align-items: center;
 }
 .hero-actions { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-.hero-actions .sample-download-btn { text-align: center; justify-content: center; margin-inline: auto; }
+.hero-actions .sample-download-btn { text-align: center; justify-content: center; margin-inline: auto; background: #9dd6ff; border-color: #9dd6ff; color: #7f61ff; }
+.hero-actions .sample-download-btn i { color: #7f61ff; }
 .upload-form input[type=file], .avatar-upload input[type=file] {
   width: 100%;
   border-radius: 10px;
@@ -371,10 +372,10 @@ body {
 .profile-dropdown a:hover { background: var(--surface-2); }
 
 /* DASHBOARD */
-.topbar { margin-top: 20px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 12px; display: grid; grid-template-columns: 1fr; gap: 12px; overflow: visible; }
+.topbar { margin-top: 20px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 12px; display: grid; grid-template-columns: 1fr; gap: 12px; overflow: visible; position: relative; z-index: 300; isolation: isolate; }
 .topbar-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .topbar-actions { display: flex; align-items: center; gap: 10px; }
-.dashboard-title { margin: 0; font-size: clamp(1rem, 2vw, 1.35rem); }
+.dashboard-title { margin: 0; font-size: clamp(1rem, 2vw, 1.35rem); color: var(--blue); }
 
 .insights-panel { margin-top: 12px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 14px 16px; }
 .insights-panel ul { margin: 6px 0 0; color: var(--muted); }
@@ -560,21 +561,21 @@ body {
     row-gap: 8px;
     position: sticky;
   }
-  .brand { grid-area: brand; justify-self: center; font-size: 1rem; }
+  .brand { grid-area: brand; justify-self: center; font-size: 1.22rem; }
   .nav-row {
     grid-area: row;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 5px;
+    gap: 6px;
     flex-wrap: nowrap;
     overflow: visible;
     padding-bottom: 2px;
   }
   .nav-center {
-    justify-content: flex-start;
-    gap: 5px;
+    justify-content: center;
+    gap: 6px;
     flex-wrap: nowrap;
     flex: 1;
     min-width: 0;
@@ -596,8 +597,8 @@ body {
     min-width: 0;
   }
   .theme-toggle { width: 36px; height: 36px; }
-  .navbar .theme-toggle { position: absolute; top: 10px; left: 12px; right: auto; margin: 0; z-index: 240; }
-  .topbar .theme-toggle { margin-right: 14px; }
+  .navbar .theme-toggle { position: static; margin-right: 10px; z-index: 240; }
+  .topbar .theme-toggle { position: absolute; top: 10px; left: 12px; right: auto; margin: 0; z-index: 360; }
   .signin-btn { padding: 7px 9px; font-size: .68rem; }
   .profile-btn { width: 50px; height: 50px; margin-left: 0; }
 
@@ -607,7 +608,7 @@ body {
   .hero, .info-section, .topbar, .insights-panel, .dashboard, .app-footer, .profile-page { width: calc(100% - 12px); }
 
   .topbar { gap: 10px; }
-  .dashboard-title { text-align: center; width: 100%; font-size: 1.2rem; }
+  .dashboard-title { text-align: center; width: 100%; font-size: 1.2rem; color: var(--blue); padding-inline: 48px; }
   .topbar-nav {
     width: 100%;
     justify-content: space-between;
