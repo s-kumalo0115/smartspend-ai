@@ -576,7 +576,13 @@ body {
     flex: 1;
     min-width: 0;
   }
-  .nav-right { gap: 5px; flex-wrap: nowrap; flex-shrink: 0; }
+  .nav-right {
+    gap: 5px;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    margin-left: 8px;
+    padding-right: 3px;
+  }
   .nav-link {
     width: auto;
     justify-content: center;
@@ -585,9 +591,9 @@ body {
     padding: 7px 7px;
     min-width: 0;
   }
-  .theme-toggle { width: 35px; height: 35px; }
+  .theme-toggle { width: 35px; height: 35px; margin-right: 6px; }
   .signin-btn { padding: 7px 9px; font-size: .68rem; }
-  .profile-btn { width: 42px; height: 42px; }
+  .profile-btn { width: 42px; height: 42px; margin-left: -2px; }
 
   .hero-intro { gap: 10px; }
   .hero-visual { min-height: 190px; }
@@ -603,7 +609,7 @@ body {
     flex-wrap: nowrap;
     overflow: hidden;
   }
-  .topbar-actions { justify-content: flex-end; gap: 6px; flex-wrap: nowrap; }
+  .topbar-actions { justify-content: flex-end; gap: 6px; flex-wrap: nowrap; margin-left: 8px; padding-right: 3px; }
   .topbar .home-btn {
     width: auto;
     white-space: nowrap;

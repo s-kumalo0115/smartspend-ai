@@ -103,6 +103,11 @@
 
       profileToggle.addEventListener("pointerdown", (e) => {
         if (e.pointerType === "touch") {
+          if (suppressNextClick) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+          }
           suppressNextClick = true;
           toggleDropdown(e);
           setTimeout(() => {
@@ -113,6 +118,7 @@
 
       profileToggle.addEventListener("click", (e) => {
         if (suppressNextClick) {
+          suppressNextClick = false;
           e.preventDefault();
           e.stopPropagation();
           return;
