@@ -93,14 +93,21 @@
     if (avatarPreview) avatarPreview.src = profile.avatar || "/static/images/anonymous-avatar.svg";
 
     if (profileToggle && profileDropdown) {
+      const closeDropdown = () => profileDropdown.classList.add("hidden");
       const toggleDropdown = (e) => {
         e.preventDefault();
         e.stopPropagation();
         profileDropdown.classList.toggle("hidden");
       };
-      profileToggle.addEventListener("pointerup", toggleDropdown);
-      profileToggle.addEventListener("click", (e) => e.preventDefault());
-      document.addEventListener("click", () => profileDropdown.classList.add("hidden"));
+
+      profileToggle.addEventListener("click", toggleDropdown);
+      profileToggle.addEventListener("touchend", toggleDropdown, { passive: false });
+
+      profileDropdown.addEventListener("click", (e) => e.stopPropagation());
+      document.addEventListener("click", closeDropdown);
+      document.addEventListener("touchend", (e) => {
+        if (!profileWrapper?.contains(e.target)) closeDropdown();
+      }, { passive: true });
     }
 
     if (logoutBtn) {
