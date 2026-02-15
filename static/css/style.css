@@ -348,10 +348,11 @@ body {
 .auth-input:focus, .auth-input:not(:placeholder-shown) { background: #fff; color: #111a35; border-color: #b8c6f9; }
 
 /* PROFILE */
-.profile-wrapper { position: relative; }
+.profile-wrapper { position: relative; z-index: 120; }
 .profile-btn {
   width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border);
   background: var(--surface-2); padding: 0; cursor: pointer;
+  position: relative; z-index: 121; touch-action: manipulation;
 }
 .profile-btn img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; animation: avatarFloat 2.4s ease-in-out infinite; }
 @keyframes avatarFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-2px) scale(1.03)} }
@@ -554,24 +555,24 @@ body {
       "row";
     row-gap: 8px;
   }
-  .brand { grid-area: brand; justify-self: center; font-size: .96rem; }
+  .brand { grid-area: brand; justify-self: center; font-size: 1rem; }
   .nav-row {
     grid-area: row;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 6px;
+    gap: 8px;
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding-bottom: 2px;
+    padding-bottom: 3px;
   }
-  .nav-center { justify-content: flex-start; gap: 6px; flex-wrap: nowrap; }
-  .nav-right { gap: 6px; flex-wrap: nowrap; }
-  .nav-link { width: auto; justify-content: center; white-space: nowrap; font-size: .7rem; padding: 7px 9px; }
-  .theme-toggle { width: 34px; height: 34px; }
-  .signin-btn { padding: 7px 10px; font-size: .7rem; }
-  .profile-btn { width: 34px; height: 34px; }
+  .nav-center { justify-content: flex-start; gap: 8px; flex-wrap: nowrap; }
+  .nav-right { gap: 8px; flex-wrap: nowrap; flex-shrink: 0; }
+  .nav-link { width: auto; justify-content: center; white-space: nowrap; font-size: .74rem; padding: 8px 10px; }
+  .theme-toggle { width: 36px; height: 36px; }
+  .signin-btn { padding: 8px 11px; font-size: .74rem; }
+  .profile-btn { width: 40px; height: 40px; }
 
   .hero-intro { gap: 10px; }
   .hero-visual { min-height: 190px; }
@@ -588,8 +589,7 @@ body {
     overflow-x: auto;
   }
   .topbar-actions { justify-content: flex-start; gap: 6px; flex-wrap: nowrap; }
-  .topbar .home-btn,
-  .topbar #saveAnalysisBtn {
+  .topbar .home-btn {
     width: auto;
     white-space: nowrap;
     font-size: .73rem;
