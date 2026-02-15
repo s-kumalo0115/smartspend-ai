@@ -59,6 +59,7 @@ body {
 .navbar {
   position: sticky;
   top: 0;
+  overflow: visible;
   z-index: 90;
   border-bottom: 1px solid var(--border);
   background: color-mix(in oklab, var(--surface), #000 8%);
@@ -356,12 +357,12 @@ body {
   background: var(--surface-2); padding: 0; cursor: pointer;
   position: relative; z-index: 221; touch-action: manipulation; pointer-events: auto; -webkit-tap-highlight-color: transparent;
 }
-.profile-btn img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; animation: avatarFloat 2.4s ease-in-out infinite; }
+.profile-btn img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; animation: none; }
 @keyframes avatarFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-2px) scale(1.03)} }
 .profile-dropdown {
   position: absolute; right: 0; top: 48px; min-width: 220px; border-radius: 14px; pointer-events: auto;
   background: linear-gradient(165deg, color-mix(in oklab, var(--surface), #fff 4%), color-mix(in oklab, var(--surface-2), #fff 2%));
-  border: 1px solid color-mix(in oklab, var(--blue), var(--border)); box-shadow: var(--shadow); z-index: 320;
+  border: 1px solid color-mix(in oklab, var(--blue), var(--border)); box-shadow: var(--shadow); z-index: 1200;
   opacity: 0; transform: translateY(-6px); transition: opacity .2s ease, transform .2s ease;
 }
 .profile-dropdown:not(.hidden) { opacity: 1; transform: translateY(0); }
@@ -370,7 +371,7 @@ body {
 .profile-dropdown a:hover { background: var(--surface-2); }
 
 /* DASHBOARD */
-.topbar { margin-top: 20px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 12px; display: grid; grid-template-columns: 1fr; gap: 12px; }
+.topbar { margin-top: 20px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 12px; display: grid; grid-template-columns: 1fr; gap: 12px; overflow: visible; }
 .topbar-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .topbar-actions { display: flex; align-items: center; gap: 10px; }
 .dashboard-title { margin: 0; font-size: clamp(1rem, 2vw, 1.35rem); }
@@ -483,7 +484,7 @@ body {
 #profileForm label { text-align: center; font-weight: 700; color: var(--muted); }
 #profileForm input { text-align: center; }
 .avatar-upload { text-align: center; margin-bottom: 12px; }
-.avatar-upload img { width: 104px; height: 104px; border-radius: 50%; border: 2px solid color-mix(in oklab, var(--purple), var(--border)); box-shadow: 0 0 0 8px color-mix(in oklab, var(--blue), transparent 82%); animation: avatarFloat 2.4s ease-in-out infinite; }
+.avatar-upload img { width: 104px; height: 104px; border-radius: 50%; border: 2px solid color-mix(in oklab, var(--purple), var(--border)); box-shadow: 0 0 0 8px color-mix(in oklab, var(--blue), transparent 82%); animation: none; }
 .profile-summary { margin-top: 12px; color: var(--muted); font-size: .86rem; border: 1px solid var(--border); background: var(--surface-2); padding: 12px; border-radius: 12px; }
 
 /* FOOTER */
@@ -551,11 +552,13 @@ body {
 @media (max-width: 720px) {
   .navbar {
     padding-inline: 10px;
+    padding-top: 54px;
     grid-template-columns: 1fr;
     grid-template-areas:
       "brand"
       "row";
     row-gap: 8px;
+    position: sticky;
   }
   .brand { grid-area: brand; justify-self: center; font-size: 1rem; }
   .nav-row {
@@ -566,7 +569,7 @@ body {
     justify-content: space-between;
     gap: 5px;
     flex-wrap: nowrap;
-    overflow: hidden;
+    overflow: visible;
     padding-bottom: 2px;
   }
   .nav-center {
@@ -577,11 +580,12 @@ body {
     min-width: 0;
   }
   .nav-right {
-    gap: 5px;
+    gap: 8px;
     flex-wrap: nowrap;
     flex-shrink: 0;
-    margin-left: 8px;
-    padding-right: 3px;
+    margin-left: 10px;
+    padding-right: 0;
+    position: static;
   }
   .nav-link {
     width: auto;
@@ -591,9 +595,11 @@ body {
     padding: 7px 7px;
     min-width: 0;
   }
-  .theme-toggle { width: 35px; height: 35px; margin-right: 6px; }
+  .theme-toggle { width: 36px; height: 36px; }
+  .navbar .theme-toggle { position: absolute; top: 10px; left: 12px; right: auto; margin: 0; z-index: 240; }
+  .topbar .theme-toggle { margin-right: 14px; }
   .signin-btn { padding: 7px 9px; font-size: .68rem; }
-  .profile-btn { width: 42px; height: 42px; margin-left: -2px; }
+  .profile-btn { width: 50px; height: 50px; margin-left: 0; }
 
   .hero-intro { gap: 10px; }
   .hero-visual { min-height: 190px; }
@@ -607,9 +613,9 @@ body {
     justify-content: space-between;
     gap: 6px;
     flex-wrap: nowrap;
-    overflow: hidden;
+    overflow: visible;
   }
-  .topbar-actions { justify-content: flex-end; gap: 6px; flex-wrap: nowrap; margin-left: 8px; padding-right: 3px; }
+  .topbar-actions { justify-content: flex-end; gap: 10px; flex-wrap: nowrap; margin-left: 8px; padding-right: 0; }
   .topbar .home-btn {
     width: auto;
     white-space: nowrap;

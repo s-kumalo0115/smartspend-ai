@@ -101,6 +101,19 @@
         profileDropdown.classList.toggle("hidden");
       };
 
+      profileToggle.addEventListener("touchstart", (e) => {
+        if (suppressNextClick) {
+          e.preventDefault();
+          e.stopPropagation();
+          return;
+        }
+        suppressNextClick = true;
+        toggleDropdown(e);
+        setTimeout(() => {
+          suppressNextClick = false;
+        }, 450);
+      }, { passive: false });
+
       profileToggle.addEventListener("pointerdown", (e) => {
         if (e.pointerType === "touch") {
           if (suppressNextClick) {
