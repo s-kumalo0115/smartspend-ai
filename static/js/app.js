@@ -94,16 +94,28 @@
 
     if (profileToggle && profileDropdown) {
       const closeDropdown = () => profileDropdown.classList.add("hidden");
+      let touchHandledAt = 0;
       const toggleDropdown = (e) => {
         e.preventDefault();
         e.stopPropagation();
         profileDropdown.classList.toggle("hidden");
       };
 
-      profileToggle.addEventListener("click", toggleDropdown);
-      profileToggle.addEventListener("touchend", toggleDropdown, { passive: false });
+      profileToggle.addEventListener("touchend", (e) => {
+        touchHandledAt = Date.now();
+        toggleDropdown(e);
+      }, { passive: false });
+
+      profileToggle.addEventListener("click", (e) => {
+        if (Date.now() - touchHandledAt < 450) {
+          e.preventDefault();
+          return;
+        }
+        toggleDropdown(e);
+      });
 
       profileDropdown.addEventListener("click", (e) => e.stopPropagation());
+      profileDropdown.addEventListener("touchend", (e) => e.stopPropagation(), { passive: true });
       document.addEventListener("click", closeDropdown);
       document.addEventListener("touchend", (e) => {
         if (!profileWrapper?.contains(e.target)) closeDropdown();
