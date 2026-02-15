@@ -94,32 +94,41 @@
 
     if (profileToggle && profileDropdown) {
       const closeDropdown = () => profileDropdown.classList.add("hidden");
-      let touchHandledAt = 0;
+      let suppressNextClick = false;
       const toggleDropdown = (e) => {
         e.preventDefault();
         e.stopPropagation();
         profileDropdown.classList.toggle("hidden");
       };
 
-      profileToggle.addEventListener("touchend", (e) => {
-        touchHandledAt = Date.now();
-        toggleDropdown(e);
-      }, { passive: false });
+      profileToggle.addEventListener("pointerdown", (e) => {
+        if (e.pointerType === "touch") {
+          suppressNextClick = true;
+          toggleDropdown(e);
+          setTimeout(() => {
+            suppressNextClick = false;
+          }, 450);
+        }
+      });
 
       profileToggle.addEventListener("click", (e) => {
-        if (Date.now() - touchHandledAt < 450) {
+        if (suppressNextClick) {
           e.preventDefault();
+          e.stopPropagation();
           return;
         }
         toggleDropdown(e);
       });
 
       profileDropdown.addEventListener("click", (e) => e.stopPropagation());
-      profileDropdown.addEventListener("touchend", (e) => e.stopPropagation(), { passive: true });
-      document.addEventListener("click", closeDropdown);
-      document.addEventListener("touchend", (e) => {
+      profileDropdown.addEventListener("pointerdown", (e) => e.stopPropagation());
+
+      document.addEventListener("pointerdown", (e) => {
         if (!profileWrapper?.contains(e.target)) closeDropdown();
-      }, { passive: true });
+      });
+      document.addEventListener("click", (e) => {
+        if (!profileWrapper?.contains(e.target)) closeDropdown();
+      });
     }
 
     if (logoutBtn) {

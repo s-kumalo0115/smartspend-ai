@@ -68,6 +68,7 @@ body {
   grid-template-columns: auto 1fr auto;
   gap: 16px;
   align-items: center;
+  isolation: isolate;
 }
 .brand {
   font-size: clamp(1.08rem, 1.4vw, 1.45rem);
@@ -109,7 +110,7 @@ body {
 }
 .nav-link i { color: var(--blue); }
 .nav-link:hover { transform: translateY(-2px); border-color: var(--blue); box-shadow: var(--glow); }
-.nav-right { display: flex; align-items: center; gap: 10px; }
+.nav-right { display: flex; align-items: center; gap: 10px; position: relative; z-index: 130; pointer-events: auto; }
 .theme-toggle {
   width: 42px;
   height: 42px;
@@ -349,18 +350,18 @@ body {
 .auth-input:focus, .auth-input:not(:placeholder-shown) { background: #fff; color: #111a35; border-color: #b8c6f9; }
 
 /* PROFILE */
-.profile-wrapper { position: relative; z-index: 120; }
+.profile-wrapper { position: relative; z-index: 220; pointer-events: auto; }
 .profile-btn {
   width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border);
   background: var(--surface-2); padding: 0; cursor: pointer;
-  position: relative; z-index: 121; touch-action: manipulation;
+  position: relative; z-index: 221; touch-action: manipulation; pointer-events: auto; -webkit-tap-highlight-color: transparent;
 }
 .profile-btn img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; animation: avatarFloat 2.4s ease-in-out infinite; }
 @keyframes avatarFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-2px) scale(1.03)} }
 .profile-dropdown {
   position: absolute; right: 0; top: 48px; min-width: 220px; border-radius: 14px; pointer-events: auto;
   background: linear-gradient(165deg, color-mix(in oklab, var(--surface), #fff 4%), color-mix(in oklab, var(--surface-2), #fff 2%));
-  border: 1px solid color-mix(in oklab, var(--blue), var(--border)); box-shadow: var(--shadow); z-index: 240;
+  border: 1px solid color-mix(in oklab, var(--blue), var(--border)); box-shadow: var(--shadow); z-index: 320;
   opacity: 0; transform: translateY(-6px); transition: opacity .2s ease, transform .2s ease;
 }
 .profile-dropdown:not(.hidden) { opacity: 1; transform: translateY(0); }
