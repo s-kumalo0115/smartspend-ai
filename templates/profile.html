@@ -1,125 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Profile · SmartSpend AI</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile · SmartSpend AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 </head>
-
 <body>
-
-<div class="profile-page">
-    <div class="profile-card">
-
-        <button href="/" class="profile-close" id="closeProfile">&times;</button>
-
-        <h2>Your Profile</h2>
-
-
-        <!-- FORM -->
-        <form id="profileForm">
-
-        <div class="avatar-upload">
-            <img id="avatarPreview" src="/static/IMAGES/person_12259248.png">
-            <input type="file" id="avatarInput" accept="image/*">
-        </div>
-
-            <label>Full Name</label>
-            <input type="text" id="name" placeholder="Your name">
-        
-
-        
-            <label>Email</label>
-            <input type="email" id="email" placeholder="your@email.com">
-        
-
-        
-            <label>Occupation</label>
-            <input type="text" id="occupation" placeholder="Student / Analyst / Developer">
-        
-        <div>
-            <button type="submit" id="profile-submit">Save Profile</button>
-        </div>
-        </form>
-
-        <!-- SAVED INFO -->
-        <div class="profile-summary" id="profileSummary" style="margin-top:22px;font-size:0.75rem;opacity:0.75">
-            <strong>Saved Profile</strong>
-            <div id="summaryContent">No profile saved yet.</div>
-        </div>
-
+  <header class="topbar reveal-down">
+    <div class="topbar-left">
+      <a href="/" class="home-btn" id="homeLink"><i class="fa-solid fa-house"></i> Home</a>
+      <h2 class="dashboard-title">Profile Settings</h2>
     </div>
-</div>
+    <div class="topbar-actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
+      <div class="profile-wrapper" id="profileWrapper">
+        <button class="profile-btn" id="profileToggle" aria-label="Open profile menu">
+          <img id="avatarPreview" src="/static/images/anonymous-avatar.svg" alt="Profile avatar" />
+        </button>
+        <div class="profile-dropdown hidden" id="profileDropdown">
+          <div class="dropdown-header"><strong id="navName">User</strong></div>
+          <a href="/profile" id="profileLink">Your Profile</a>
+          <a href="#" id="logoutBtn">Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<script>
-/* ------------------
-   LOAD PROFILE
------------------- */
-const storedProfile = JSON.parse(localStorage.getItem("profile")) || {};
+  <div class="profile-page">
+    <article class="profile-card glass reveal">
+      <button class="profile-close" id="closeProfile" aria-label="Close profile">×</button>
+      <h2><i class="fa-solid fa-user-gear"></i> Your Profile</h2>
 
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const occupationInput = document.getElementById("occupation");
-const avatarPreview = document.getElementById("avatarPreview");
-const summaryContent = document.getElementById("summaryContent");
+      <form id="profileForm">
+        <div class="avatar-upload">
+          <img id="avatarPreviewForm" src="/static/images/anonymous-avatar.svg" alt="Profile avatar" />
+          <input type="file" id="avatarInput" accept="image/*" />
+        </div>
 
-nameInput.value = storedProfile.name || "";
-emailInput.value = storedProfile.email || "";
-occupationInput.value = storedProfile.occupation || "";
-if (storedProfile.avatar) avatarPreview.src = storedProfile.avatar;
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Your name" />
 
-updateSummary();
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@domain.com" required />
 
-/* ------------------
-   AVATAR UPLOAD
------------------- */
-document.getElementById("avatarInput").addEventListener("change", e => {
-    const reader = new FileReader();
-    reader.onload = () => {
-        avatarPreview.src = reader.result;
-        storedProfile.avatar = reader.result;
-        saveProfile();
-    };
-    reader.readAsDataURL(e.target.files[0]);
-});
+        <label for="occupation">Occupation</label>
+        <input type="text" id="occupation" placeholder="Analyst / Developer / Student" />
 
-/* ------------------
-   SAVE PROFILE
------------------- */
-document.getElementById("profileForm").addEventListener("submit", e => {
-    e.preventDefault();
-    saveProfile();
-    alert("Profile saved");
-});
+        <button type="submit" id="profile-submit"><i class="fa-solid fa-floppy-disk"></i> Save Profile</button>
+      </form>
 
-function saveProfile() {
-    storedProfile.name = nameInput.value;
-    storedProfile.email = emailInput.value;
-    storedProfile.occupation = occupationInput.value;
+      <div class="profile-summary" id="profileSummary">
+        <strong>Saved Profile</strong>
+        <div id="summaryContent">No profile saved yet.</div>
+      </div>
+    </article>
+  </div>
 
-    localStorage.setItem("profile", JSON.stringify(storedProfile));
-    updateSummary();
-}
+  <footer class="app-footer reveal">
+    <div class="footer-row">
+      <span>SmartSpend AI © 2026</span>
+      <span class="footer-icons">
+        <a href="https://github.com/skumalo0115-commits" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/sbahle-kumalo-b4b498267" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://www.facebook.com/share/1DL66XnWr5/?mibextid=wwXIfr" target="_blank" rel="noopener"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://wa.me/27827744933" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="tel:0827744933" aria-label="Call"><i class="fa-solid fa-phone"></i></a>
+      </span>
+    </div>
+  </footer>
 
-/* ------------------
-   SUMMARY VIEW
------------------- */
-function updateSummary() {
-    if (!storedProfile.name) {
-        summaryContent.innerText = "No profile saved yet.";
-        return;
-    }
-
-    summaryContent.innerHTML = `
-        <div>Name: ${storedProfile.name}</div>
-        <div>Email: ${storedProfile.email || "-"}</div>
-        <div>Occupation: ${storedProfile.occupation || "-"}</div>
-    `;
-}
-document.getElementById("closeProfile")?.addEventListener("click", () => {
-    window.location.href = "/"; // or "/" if that’s your signed-in home
-});
-</script>
-
+  <script defer src="/static/js/app.js"></script>
+  <script defer src="/static/js/profile-page.js"></script>
 </body>
 </html>

@@ -1,368 +1,91 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>SmartSpend Dashboard</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartSpend Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 </head>
 <body>
-
-<div class="topbar">
+  <header class="topbar reveal-down">
     <div class="topbar-left">
-        <a href="/" class="home-btn">Home</a>
-        <span class="divider"></span>
-        <h2 class="dashboard-title">SmartSpend AI Analysis Dashboard</h2>
+      <a href="/" class="home-btn" id="homeLink"><i class="fa-solid fa-house"></i> Home</a>
+      <h2 class="dashboard-title">SmartSpend Trading-Style Insights</h2>
     </div>
-
-    <!-- PROFILE (HIDDEN BY DEFAULT) -->
-    <div class="profile-wrapper hidden" id="profileWrapper">
-        <button class="profile-btn" id="profileToggle" style="margin-right: 60px;">
-            <img id="avatarPreview" src="/static/IMAGES/person_12259248.png">
+    <div class="topbar-actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
+      <button id="saveAnalysisBtn" class="sample-download-btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Save Snapshot</button>
+      <div class="profile-wrapper hidden" id="profileWrapper">
+        <button class="profile-btn" id="profileToggle" aria-label="Open profile menu">
+          <img id="avatarPreview" src="/static/images/anonymous-avatar.svg" alt="Profile avatar" />
         </button>
-
         <div class="profile-dropdown hidden" id="profileDropdown">
-            <div class="dropdown-header">
-                <strong id="navName">User</strong>
-            </div>
-            <a href="/profile">Your Profile</a>
-            <a href="/" id="logoutBtn">Sign Out</a>
+          <div class="dropdown-header"><strong id="navName">User</strong></div>
+          <a href="/profile" id="profileLink">Your Profile</a>
+          <a href="#" id="logoutBtn">Sign Out</a>
         </div>
+      </div>
     </div>
-</div>
+  </header>
+
+  <section class="insights-panel reveal-up">
+    <h3><i class="fa-solid fa-lightbulb"></i> AI Insights</h3>
+    <ul id="insightsList">{% for insight in insights %}<li>{{ insight }}</li>{% endfor %}</ul>
+  </section>
+
+  <main class="dashboard">
+    <div class="kpi reveal-left"><span>Total Balance</span><strong id="kpiTotal">R {{ total }}</strong></div>
+    <div class="kpi reveal-right"><span>Total Profit</span><strong id="kpiAvg">R {{ average }}</strong></div>
+    <div class="kpi reveal-left"><span>Pending Orders</span><strong id="kpiPrediction">R {{ prediction }}</strong></div>
+    <div class="kpi danger reveal-right"><span>Active Assets</span><strong id="kpiAnomalies">{{ anomalies }}</strong></div>
+
+    <article class="chart reveal-left"><h4>Predictive Spending Trend</h4><p class="chart-note">Shows whether spending momentum is accelerating or stabilizing over time.</p><canvas id="trendChart"></canvas></article>
+    <article class="chart reveal-right"><h4>Category Distribution</h4><p class="chart-note">Displays category weight so you can identify dominant expense sectors quickly.</p><canvas id="categoryChart"></canvas></article>
+    <article class="chart reveal-left"><h4>Monthly Comparison</h4><p class="chart-note">Compares monthly totals to reveal budget pressure windows and recovery periods.</p><canvas id="monthlyBarChart"></canvas></article>
+    <article class="chart reveal-right"><h4>Transaction Scatter</h4><p class="chart-note">Each dot is a transaction; larger outliers reveal unusual behavior patterns.</p><canvas id="scatterChart"></canvas></article>
+    <article class="chart reveal-left"><h4>Cumulative Spend Curve</h4><p class="chart-note">Tracks cumulative growth to understand long-term cost accumulation velocity.</p><canvas id="cumulativeChart"></canvas></article>
+    <article class="chart reveal-right"><h4>Rolling Average Signal</h4><p class="chart-note">Smooth baseline indicating true trend direction beyond short-term noise.</p><canvas id="rollingChart"></canvas></article>
+    <article class="chart reveal-left"><h4>Spending Velocity</h4><p class="chart-note">Measures spend change between consecutive points to catch abrupt shifts.</p><canvas id="velocityChart"></canvas></article>
+    <article class="chart reveal-right"><h4>Volatility Radar</h4><p class="chart-note">Highlights unstable categories where spending variance is unusually high.</p><canvas id="volatilityChart"></canvas></article>
+    <article class="chart reveal-up"><h4>Fixed vs Variable Split</h4><p class="chart-note">Shows stability ratio between fixed commitments and flexible expenses.</p><canvas id="expenseTypeChart"></canvas></article>
+  </main>
 
 
-<!-- DASHBOARD GRID -->
-<div class="dashboard">
-
-    <!-- KPI CARDS -->
-    <div class="kpi">
-        Total Spending
-        <strong>R {{ total }}</strong>
+  <footer class="app-footer reveal">
+    <div class="footer-row">
+      <span>SmartSpend AI © 2026</span>
+      <span class="footer-icons">
+        <a href="https://github.com/skumalo0115-commits" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/sbahle-kumalo-b4b498267" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://www.facebook.com/share/1DL66XnWr5/?mibextid=wwXIfr" target="_blank" rel="noopener"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://wa.me/27827744933" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="tel:0827744933" aria-label="Call"><i class="fa-solid fa-phone"></i></a>
+      </span>
     </div>
+  </footer>
 
-    <div class="kpi">
-        Avg Transaction
-        <strong>R {{ average }}</strong>
-    </div>
-
-    <div class="kpi">
-        Next Month Forecast
-        <strong>R {{ prediction }}</strong>
-    </div>
-
-    <div class="kpi danger">
-        Risky Transactions
-        <strong>{{ anomalies }}</strong>
-    </div>
-
-<!-- CHARTS -->
-
-<div class="chart">
-    <h4>Spending Trend</h4>
-    <p class="chart-desc">
-        Shows how your total spending evolves over time, helping you spot upward or downward habits.
-    </p>
-    <canvas id="trendChart"></canvas>
-</div>
-
-<div class="chart">
-    <h4>Category Distribution</h4>
-    <p class="chart-desc">
-        Breakdown of expenses by category, highlighting where most of your money goes.
-    </p>
-    <canvas id="categoryChart"></canvas>
-</div>
-
-<div class="chart">
-    <h4>Monthly Comparison</h4>
-    <p class="chart-desc">
-        Compares total spending month by month to reveal seasonal patterns.
-    </p>
-    <canvas id="monthlyBarChart"></canvas>
-</div>
-
-<div class="chart">
-    <h4>Expense Scatter</h4>
-    <p class="chart-desc">
-        Displays individual transactions to identify unusually high or irregular expenses.
-    </p>
-    <canvas id="scatterChart"></canvas>
-</div>
-
-<div class="chart">
-    <h4>Cumulative Spend</h4>
-    <p class="chart-desc">
-        Tracks how spending accumulates over time, reinforcing long-term awareness.
-    </p>
-    <canvas id="cumulativeChart"></canvas>
-</div>
-
-<div class="chart">
-    <h4>Rolling Average</h4>
-    <p class="chart-desc">
-        Smooths daily spending to reveal underlying trends without noise.
-    </p>
-    <canvas id="rollingChart"></canvas>
-</div>
-
-<div class="chart">
-    <h4>Spending Velocity</h4>
-    <p class="chart-desc">
-        Indicates how quickly money is being spent over short periods.
-    </p>
-    <canvas id="velocityChart"></canvas>
-</div>
-
-<div class="chart">
-    <h4>Spending Volatility</h4>
-    <p class="chart-desc">
-        Measures consistency versus fluctuation in your expenses.
-    </p>
-    <canvas id="volatilityChart"></canvas>
-</div>
-
-<div class="chart">
-    <h4>Expense Type Split</h4>
-    <p class="chart-desc">
-        Separates essential and discretionary spending to encourage smarter decisions.
-    </p>
-    <canvas id="expenseTypeChart"></canvas>
-</div>
-
-
-</div> 
-<!-- CHART.JS -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-/* ----------------------
-   DATA FROM FLASK
----------------------- */
-const months = {{ months | tojson }};
-const monthlyTotals = {{ monthly | tojson }};
-const categories = {{ categories | tojson }};
-const categoryTotals = {{ category_totals | tojson }};
-const amounts = {{ amounts | tojson }};
-const dates = {{ dates | tojson }};
-const cumulative = {{ cumulative | tojson }};
-const rolling = {{ rolling | tojson }};
-const velocity = {{ velocity | tojson }};
-const volLabels = {{ volatility_labels | tojson }};
-const volValues = {{ volatility_values | tojson }};
-const expenseLabels = {{ expense_labels | tojson }};
-const expenseValues = {{ expense_values | tojson }};
-
-/* CUMULATIVE SPEND */
-new Chart(cumulativeChart, {
-    type: "line",
-    data: {
-        labels: dates,
-        datasets: [{
-            label: "Cumulative Spend",
-            data: cumulative,
-            borderColor: "#22c55e",
-            fill: false,
-            tension: 0.35
-        }]
-    }
-});
-
-/* ROLLING AVERAGE */
-new Chart(rollingChart, {
-    type: "line",
-    data: {
-        labels: dates,
-        datasets: [{
-            label: "Rolling Avg",
-            data: rolling,
-            borderColor: "#06b6d4",
-            borderDash: [6,4]
-        }]
-    }
-});
-
-/* SPENDING VELOCITY */
-new Chart(velocityChart, {
-    type: "line",
-    data: {
-        labels: dates,
-        datasets: [{
-            label: "Spending Velocity",
-            data: velocity,
-            borderColor: "#f59e0b"
-        }]
-    }
-});
-
-/* VOLATILITY RADAR */
-new Chart(volatilityChart, {
-    type: "radar",
-    data: {
-        labels: volLabels,
-        datasets: [{
-            label: "Category Volatility",
-            data: volValues,
-            backgroundColor: "rgba(99,102,241,0.2)",
-            borderColor: "#6366f1"
-        }]
-    }
-});
-
-/* FIXED VS VARIABLE */
-new Chart(expenseTypeChart, {
-    type: "doughnut",
-    data: {
-        labels: expenseLabels,
-        datasets: [{
-            data: expenseValues,
-            backgroundColor: ["#4f46e5", "#22c55e"]
-        }]
-    }
-});
-
-
-/* ----------------------
-   LINE: SPENDING TREND
----------------------- */
-new Chart(document.getElementById("trendChart"), {
-    type: "line",
-    data: {
-        labels: months,
-        datasets: [{
-            label: "Spending Trend",
-            data: monthlyTotals,
-            borderColor: "#6366f1",
-            backgroundColor: "rgba(99,102,241,0.2)",
-            tension: 0.4,
-            fill: true
-        }]
-    },
-    options: {
-        plugins: { legend: { display: false } }
-    }
-});
-
-/* ----------------------
-   PIE: CATEGORY SPLIT
----------------------- */
-new Chart(document.getElementById("categoryChart"), {
-    type: "doughnut",
-    data: {
-        labels: categories,
-        datasets: [{
-            data: categoryTotals,
-            backgroundColor: [
-                "#4f46e5",
-                "#22c55e",
-                "#f59e0b",
-                "#ef4444",
-                "#06b6d4"
-            ]
-        }]
-    }
-});
-
-/* ----------------------
-   BAR: MONTHLY TOTALS
----------------------- */
-new Chart(document.getElementById("monthlyBarChart"), {
-    type: "bar",
-    data: {
-        labels: months,
-        datasets: [{
-            label: "Monthly Spend",
-            data: monthlyTotals,
-            backgroundColor: "#6366f1"
-        }]
-    },
-    options: {
-        plugins: { legend: { display: false } }
-    }
-});
-
-/* ----------------------
-   SCATTER: TRANSACTIONS
----------------------- */
-new Chart(document.getElementById("scatterChart"), {
-    type: "scatter",
-    data: {
-        datasets: [{
-            label: "Transactions",
-            data: amounts.map((v, i) => ({ x: i + 1, y: v })),
-            backgroundColor: "#22c55e"
-        }]
-    },
-    options: {
-        scales: {
-            x: { title: { display: true, text: "Transaction #" }},
-            y: { title: { display: true, text: "Amount (R)" }}
-        }
-    }
-});
-
-/* SCROLL REVEAL */
-const observer = new IntersectionObserver(
-    entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-            }
-        });
-    },
-    { threshold: 0.15 }
-);
-
-document.querySelectorAll(".chart").forEach(card => {
-    observer.observe(card);
-});
-
-/* MOUSE PARALLAX */
-document.querySelectorAll(".chart").forEach(card => {
-    card.addEventListener("mousemove", e => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left - rect.width / 2) / 25;
-        const y = (e.clientY - rect.top - rect.height / 2) / 25;
-
-        card.style.transform = `translate(${x}px, ${y}px) scale(1.02)`;
-    });
-
-    card.addEventListener("mouseleave", () => {
-        card.style.transform = "";
-    });
-});
-
-</script>
-
-<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
-
-<script>
-if (localStorage.getItem("loggedIn") !== "true") {
-    window.location.href = "/";
-}
-</script>
-<!-- FOOTER -->
-    <footer>
-        <div class="footer-top">
-            <span>SmartSpend AI © 2026</span>
-            <span>Built with Data Science & Machine Learning</span>
-        </div>
-
-        <div class="footer-links">
-            <span>MIT License</span>
-            <span>Apache 2.0 Components</span>
-            <span>OpenAI-Compatible Architecture</span>
-            <span>Academic & Educational Use Approved</span>
-        </div>
-
-        <div class="footer-bottom">
-            This project is a demonstration platform for responsible financial analytics.
-            No personal data is stored without user consent.
-        </div>
-    </footer>
-
+  <script>
+    window.__JINJA_MONTHS__ = '{{ months | tojson }}';
+    window.__JINJA_MONTHLY__ = '{{ monthly | tojson }}';
+    window.__JINJA_CATEGORIES__ = '{{ categories | tojson }}';
+    window.__JINJA_CATEGORY_TOTALS__ = '{{ category_totals | tojson }}';
+    window.__JINJA_AMOUNTS__ = '{{ amounts | tojson }}';
+    window.__JINJA_DATES__ = '{{ dates | tojson }}';
+    window.__JINJA_CUMULATIVE__ = '{{ cumulative | tojson }}';
+    window.__JINJA_ROLLING__ = '{{ rolling | tojson }}';
+    window.__JINJA_VELOCITY__ = '{{ velocity | tojson }}';
+    window.__JINJA_VOL_LABELS__ = '{{ volatility_labels | tojson }}';
+    window.__JINJA_VOL_VALUES__ = '{{ volatility_values | tojson }}';
+    window.__JINJA_EXPENSE_LABELS__ = '{{ expense_labels | tojson }}';
+    window.__JINJA_EXPENSE_VALUES__ = '{{ expense_values | tojson }}';
+    window.__JINJA_INSIGHTS__ = '{{ insights | tojson }}';
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="/static/js/app.js"></script>
+  <script defer src="/static/js/dashboard-page.js"></script>
 </body>
 </html>

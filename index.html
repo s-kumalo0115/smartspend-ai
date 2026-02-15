@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartSpend AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body>
+  <nav class="navbar" aria-label="Primary navigation">
+    <a href="#top" class="brand brand-lg"><i class="fa-solid fa-sparkles"></i> SmartSpend AI</a>
+    <div class="nav-center">
+      <a href="#features" class="nav-link" id="learnMoreBtn"><i class="fa-solid fa-graduation-cap"></i> Learn More</a>
+      <a href="#features" class="nav-link"><i class="fa-solid fa-layer-group"></i> Explore Features</a>
+      <a href="#contact" class="nav-link"><i class="fa-solid fa-address-book"></i> Contacts</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
+      <button class="signin-btn" id="signinBtn">Sign In</button>
+      <div class="profile-wrapper hidden" id="profileWrapper">
+        <button class="profile-btn" id="profileToggle" aria-label="Open profile menu">
+          <img id="avatarPreview" src="/static/images/anonymous-avatar.svg" alt="Profile avatar" />
+        </button>
+        <div class="profile-dropdown hidden" id="profileDropdown">
+          <div class="dropdown-header"><strong id="navName">User</strong></div>
+          <a href="/profile" id="profileLink">Your Profile</a>
+          <a href="#" id="logoutBtn">Sign Out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero reveal-down" id="top">
+    <div class="hero-intro">
+      <div class="hero-copy-wrap">
+        <p class="eyebrow">Financial intelligence, beautifully explained.</p>
+        <h1>See where your money goes and <span>what it will do next.</span></h1>
+        <p class="hero-copy">SmartSpend AI transforms your transaction CSV into insights, forecasts, risk signals, and polished charts for decision-making, interviews, demos, and portfolio presentations.</p>
+      </div>
+
+      <aside class="hero-visual reveal-right" aria-label="Animated spending preview">
+        <div class="hero-visual-head">
+          <span><i class="fa-solid fa-signal"></i> Live Spending Flow</span>
+          <strong>+12.8%</strong>
+        </div>
+        <div class="hero-bars">
+          <span style="--h:56%"></span><span style="--h:78%"></span><span style="--h:46%"></span>
+          <span style="--h:89%"></span><span style="--h:67%"></span><span style="--h:94%"></span>
+          <span style="--h:62%"></span><span style="--h:74%"></span>
+        </div>
+        <div class="hero-line"><i></i><i></i><i></i><i></i><i></i></div>
+      </aside>
+    </div>
+
+    <div class="upload-form-wrap">
+      <form method="POST" action="/upload" enctype="multipart/form-data" id="uploadForm" class="upload-form" aria-label="Upload CSV for analysis">
+        <input type="file" name="file" id="fileInput" accept=".csv" required />
+        <button type="submit" id="analyzeBtn" class="btn btn-primary requires-auth"><i class="fa-solid fa-chart-line"></i> Analyze Spending</button>
+      </form>
+      <div class="hero-actions">
+        <a href="/download/sample-csv" class="sample-download-btn btn-secondary"><i class="fa-solid fa-file-csv"></i> Download Sample CSV</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="info-section section-wrap" id="features">
+    <div class="grid-2">
+      <article class="card reveal-left"><div class="mini-motion motion-search"><i class="fa-solid fa-magnifying-glass-chart"></i></div><h3><i class="fa-solid fa-magnifying-glass-chart"></i> Deep Pattern Discovery</h3><p>SmartSpend maps recurring spend behavior by timeline and category, helping you quickly identify what is routine versus what is growing silently.</p></article>
+      <article class="card reveal-right"><div class="mini-motion motion-rocket"><i class="fa-solid fa-rocket"></i></div><h3><i class="fa-solid fa-rocket"></i> Forecasting Engine</h3><p>The model projects likely next-month spend based on your trajectory so planning is grounded in evidence rather than guesswork.</p></article>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px;">
+      <article class="card reveal-left"><div class="mini-motion motion-shield"><i class="fa-solid fa-shield-halved"></i></div><h3><i class="fa-solid fa-shield-halved"></i> Risk & Anomaly Detection</h3><p>Outlier detection highlights unusual transactions so you can investigate early and avoid repeated financial leakage.</p></article>
+      <article class="card reveal-right"><div class="mini-motion motion-data"><i class="fa-solid fa-database"></i></div><h3><i class="fa-solid fa-database"></i> Smart analytics pipeline</h3><p>Once you upload a CSV, SmartSpend cleans date/amount fields, normalizes categories, computes patterns, and builds forecast-ready signals automatically.</p></article>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px;">
+      <article class="card reveal-left"><div class="mini-motion motion-pie"><i class="fa-solid fa-chart-pie"></i></div><h3><i class="fa-solid fa-chart-pie"></i> Interactive decision dashboard</h3><p>You get KPI cards, trend lines, category distribution, volatility, and velocity views so you can quickly understand where money flows and why.</p></article>
+      <article class="card reveal-right"><div class="mini-motion motion-user"><i class="fa-solid fa-user-shield"></i></div><h3><i class="fa-solid fa-user-shield"></i> Persistent user intelligence</h3><p>Your profile and analysis snapshots can be saved, letting you return to your financial story over time and compare shifts with confidence.</p></article>
+    </div>
+  </section>
+
+  <section class="info-section section-wrap" id="how-it-works">
+    <div class="grid-2">
+      <article class="card reveal-left"><div class="mini-motion motion-info"><i class="fa-solid fa-circle-info"></i></div><h3><i class="fa-solid fa-circle-info"></i> What SmartSpend does</h3><p>It converts transaction CSV files into financial intelligence: trend analysis, forecasting, anomalies, and executive dashboard visuals.</p></article>
+      <article class="card reveal-right"><div class="mini-motion motion-check"><i class="fa-solid fa-list-check"></i></div><h3><i class="fa-solid fa-list-check"></i> How to use it</h3><p>1) Sign in, 2) upload a CSV with date/amount/category fields, 3) review charts, 4) save analysis snapshots and profile details.</p></article>
+    </div>
+  </section>
+
+  <section class="info-section section-wrap" id="contact">
+    <div class="card reveal-up contact-panel">
+      <h3><i class="fa-solid fa-address-book"></i> Contact Me</h3>
+      <p class="hero-copy">Tap any platform below and it opens instantly.</p>
+
+      <div class="contact-grid">
+        <a class="contact-chip" href="https://github.com/skumalo0115-commits" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i><span>GitHub</span></a>
+        <a class="contact-chip" href="https://www.linkedin.com/in/sbahle-kumalo-b4b498267" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i><span>LinkedIn</span></a>
+        <a class="contact-chip" href="https://www.facebook.com/share/1DL66XnWr5/?mibextid=wwXIfr" target="_blank" rel="noopener"><i class="fa-brands fa-facebook"></i><span>Facebook</span></a>
+        <a class="contact-chip" href="https://wa.me/27827744933" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
+      </div>
+
+      <form id="contactForm" class="contact-form">
+        <input id="contactEmail" type="email" placeholder="Your email" required />
+        <input id="contactSubject" type="text" placeholder="Subject" required />
+        <textarea id="contactMessage" placeholder="Write your message..." rows="4" required></textarea>
+        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Send Email</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="app-footer reveal">
+    <div class="footer-row">
+      <span>SmartSpend AI © 2026</span>
+      <span class="footer-icons">
+        <a href="https://github.com/skumalo0115-commits" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/sbahle-kumalo-b4b498267" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://www.facebook.com/share/1DL66XnWr5/?mibextid=wwXIfr" target="_blank" rel="noopener"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://wa.me/27827744933" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="tel:0827744933" aria-label="Call"><i class="fa-solid fa-phone"></i></a>
+      </span>
+    </div>
+  </footer>
+
+  <div class="auth-overlay hidden" id="authOverlay" role="dialog" aria-modal="true" aria-label="Authentication modal">
+    <div class="auth-card">
+      <button class="auth-close" id="authClose" aria-label="Close authentication">×</button>
+      <h2 id="authTitle">Sign In</h2>
+      <form id="authForm">
+        <input type="text" id="authName" placeholder="Full Name" class="auth-input hidden" />
+        <input type="email" id="authEmail" placeholder="Email address" class="auth-input" required />
+        <input type="password" id="authPassword" placeholder="Password" class="auth-input" required />
+        <button type="submit" class="auth-submit" id="authContinueBtn">Continue</button>
+        <button type="button" class="auth-google" id="googleAuthBtn"><i class="fa-brands fa-google"></i> Continue with Google</button>
+      </form>
+      <div class="auth-switch"><span id="authSwitchText">Don’t have an account?</span> <a href="#" id="authSwitchLink">Register</a></div>
+    </div>
+  </div>
+
+  <script defer src="/static/js/app.js"></script>
+  <script defer src="/static/js/index-page.js"></script>
+</body>
+</html>
