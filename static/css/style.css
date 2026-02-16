@@ -374,8 +374,57 @@ body {
 /* DASHBOARD */
 .topbar { margin-top: 20px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 12px; display: grid; grid-template-columns: 1fr; gap: 12px; overflow: visible; position: relative; z-index: 300; isolation: isolate; }
 .topbar-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.topbar-primary-actions { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .topbar-actions { display: flex; align-items: center; gap: 10px; }
 .dashboard-title { margin: 0; font-size: clamp(1rem, 2vw, 1.35rem); color: var(--blue); }
+.snapshot-btn { display: inline-flex; align-items: center; gap: 8px; }
+
+.snapshot-permission-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1250;
+  background: rgba(8, 14, 36, .62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.snapshot-permission-card {
+  width: min(520px, calc(100vw - 24px));
+  border-radius: 14px;
+  border: 1px solid color-mix(in oklab, var(--blue), var(--border));
+  background: linear-gradient(165deg, color-mix(in oklab, var(--surface), #fff 3%), var(--surface-2));
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+.snapshot-permission-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.snapshot-permission-card p {
+  margin: 10px 0 8px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.snapshot-permission-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.snapshot-permission-actions {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
 
 .insights-panel { margin-top: 12px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 14px 16px; }
 .insights-panel ul { margin: 6px 0 0; color: var(--muted); }
@@ -616,6 +665,7 @@ body {
     flex-wrap: nowrap;
     overflow: visible;
   }
+  .topbar-primary-actions { gap: 8px; flex-wrap: wrap; }
   .topbar-actions { justify-content: flex-end; gap: 10px; flex-wrap: nowrap; margin-left: 8px; padding-right: 0; }
   .topbar .home-btn {
     width: auto;
@@ -623,6 +673,9 @@ body {
     font-size: .73rem;
     padding: 8px 11px;
   }
+
+  .snapshot-permission-actions { flex-direction: column-reverse; }
+  .snapshot-permission-actions .btn { width: 100%; }
 
   .grid-3, .grid-2, .contact-grid { grid-template-columns: 1fr; }
   .upload-form { grid-template-columns: 1fr; }

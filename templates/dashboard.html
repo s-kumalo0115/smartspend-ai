@@ -11,10 +11,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 </head>
 <body>
-  <header class="topbar reveal-down">
+   <header class="topbar reveal-down">
     <h2 class="dashboard-title">SmartSpend Trading-Style Insights</h2>
     <div class="topbar-nav">
-      <a href="/" class="home-btn" id="homeLink"><i class="fa-solid fa-house"></i> Home</a>
+      <div class="topbar-primary-actions">
+        <a href="/" class="home-btn" id="homeLink"><i class="fa-solid fa-house"></i> Home</a>
+        <button type="button" class="home-btn snapshot-btn" id="saveSnapshotBtn" aria-haspopup="dialog" aria-controls="snapshotPermissionModal">
+          <i class="fa-solid fa-camera"></i> Save Snapshot
+        </button>
+      </div>
       <div class="topbar-actions">
         <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"><i class="fa-solid fa-circle-half-stroke"></i></button>
         <div class="profile-wrapper hidden" id="profileWrapper">
@@ -50,8 +55,26 @@
     <article class="chart reveal-right"><h4>Rolling Average Signal</h4><p class="chart-note">Smooth baseline indicating true trend direction beyond short-term noise.</p><canvas id="rollingChart"></canvas></article>
     <article class="chart reveal-left"><h4>Spending Velocity</h4><p class="chart-note">Measures spend change between consecutive points to catch abrupt shifts.</p><canvas id="velocityChart"></canvas></article>
     <article class="chart reveal-right"><h4>Volatility Radar</h4><p class="chart-note">Highlights unstable categories where spending variance is unusually high.</p><canvas id="volatilityChart"></canvas></article>
-    <article class="chart reveal-up"><h4>Fixed vs Variable Split</h4><p class="chart-note">Shows stability ratio between fixed commitments and flexible expenses.</p><canvas id="expenseTypeChart"></canvas></article>
+     <article class="chart reveal-up"><h4>Fixed vs Variable Split</h4><p class="chart-note">Shows stability ratio between fixed commitments and flexible expenses.</p><canvas id="expenseTypeChart"></canvas></article>
   </main>
+
+  <div class="snapshot-permission-modal hidden" id="snapshotPermissionModal" role="dialog" aria-modal="true" aria-labelledby="snapshotPermissionTitle">
+    <div class="snapshot-permission-card">
+      <h3 id="snapshotPermissionTitle"><i class="fa-solid fa-shield"></i> Snapshot Permissions</h3>
+      <p>
+        SmartSpend will ask your browser for a one-time capture permission. After you choose your current tab/screen,
+        your snapshot downloads immediately and capture stops.
+      </p>
+      <ul>
+        <li>No audio is captured.</li>
+        <li>Only this snapshot action runs, and then permission is released.</li>
+      </ul>
+      <div class="snapshot-permission-actions">
+        <button type="button" class="btn btn-secondary" id="snapshotCancelBtn">Cancel</button>
+        <button type="button" class="btn" id="snapshotContinueBtn">Continue</button>
+      </div>
+    </div>
+  </div>
 
 
   <footer class="app-footer reveal">

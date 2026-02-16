@@ -134,6 +134,89 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") clearFocus();
   });
+  
+   const snapshotButton = document.getElementById("saveSnapshotBtn");
+  const snapshotModal = document.getElementById("snapshotPermissionModal");
+  const snapshotContinueBtn = document.getElementById("snapshotContinueBtn");
+  const snapshotCancelBtn = document.getElementById("snapshotCancelBtn");
+
+  const closeSnapshotModal = () => snapshotModal?.classList.add("hidden");
+  const openSnapshotModal = () => snapshotModal?.classList.remove("hidden");
+
+  const downloadSnapshotFromCanvas = (canvas) => {
+    const link = document.createElement("a");
+    const timestamp = new Date().toISOString().replace(/[.:]/g, "-");
+    link.href = canvas.toDataURL("image/png");
+    link.download = `smartspend-dashboard-snapshot-${timestamp}.png`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  };
+
+  const takeDashboardSnapshot = async () => {
+    if (!navigator.mediaDevices?.getDisplayMedia) {
+      SS.toast("Snapshot capture is not supported in this browser.", "error");
+      return;
+    }
+
+    let stream;
+    try {
+      stream = await navigator.mediaDevices.getDisplayMedia({
+        video: {
+          frameRate: { ideal: 1, max: 5 },
+          displaySurface: "browser",
+        },
+        audio: false,
+      });
+
+      const track = stream.getVideoTracks()[0];
+      if (!track) throw new Error("No video track returned");
+
+      const video = document.createElement("video");
+      video.style.position = "fixed";
+      video.style.opacity = "0";
+      video.style.pointerEvents = "none";
+      video.muted = true;
+      video.srcObject = stream;
+      document.body.appendChild(video);
+
+      await video.play();
+      await new Promise((resolve) => {
+        if (video.readyState >= 2) return resolve();
+        video.onloadeddata = () => resolve();
+      });
+
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth || window.innerWidth;
+      canvas.height = video.videoHeight || window.innerHeight;
+      const ctx = canvas.getContext("2d");
+      ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      downloadSnapshotFromCanvas(canvas);
+      SS.toast("Snapshot downloaded.", "success");
+
+      video.pause();
+      video.srcObject = null;
+      video.remove();
+    } catch (error) {
+      const denied = error?.name === "NotAllowedError";
+      SS.toast(denied ? "Permission was denied for snapshot capture." : "Could not capture snapshot.", "error");
+    } finally {
+      stream?.getTracks()?.forEach((track) => track.stop());
+    }
+  };
+
+  snapshotButton?.addEventListener("click", openSnapshotModal);
+  snapshotCancelBtn?.addEventListener("click", closeSnapshotModal);
+  snapshotModal?.addEventListener("click", (event) => {
+    if (event.target === snapshotModal) closeSnapshotModal();
+  });
+
+  snapshotContinueBtn?.addEventListener("click", async () => {
+    closeSnapshotModal();
+    await takeDashboardSnapshot();
+  });
+
   document.getElementById("saveAnalysisBtn")?.addEventListener("click", async () => {
     if (isStaticMode) {
       localStorage.setItem("ssDashboardData", JSON.stringify(localData));
