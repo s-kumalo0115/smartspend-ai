@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const axis = {
     ticks: { color: "#9fb3ff" },
-    grid: { color: "rgba(159,179,255,0.14)" },
+  grid: { color: "rgba(159,179,255,0.14)" },
   };
 
   const moneyLabel = (value) => `R ${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
@@ -82,12 +82,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (window.Chart) {
     new Chart(document.getElementById("trendChart"), {
       type: "line",
-      data: { labels: data.months, datasets: [{ label: "Trend", data: data.monthly, borderColor: "#6ea8ff", backgroundColor: "rgba(110,168,255,.2)", fill: true, tension: 0.35, pointRadius: 5, pointHoverRadius: 8, hitRadius: 20, pointBackgroundColor: data.monthly.map(v => v > anomalyThreshold ? "#ff6287" : "#8a6dff") }] },
+      data: { labels: data.months, datasets: [{ label: "Trend", data: data.monthly, borderColor: "#6ea8ff", backgroundColor: "rgba(110,168,255,.2)", fill: true, tension: 0.35, pointRadius: 5, pointHoverRadius: 8, hitRadius: 20, pointBackgroundColor: data.monthly.map(v => v > anomalyThreshold ? "#ff6287" : "#ff6b7d") }] },
       options,
     });
     new Chart(document.getElementById("categoryChart"), {
       type: "doughnut",
-      data: { labels: data.categories, datasets: [{ data: data.categoryTotals, backgroundColor: ["#3158da", "#17c084", "#f59e0b", "#f43f5e", "#00a5ff", "#7c3aed"] }] },
+      data: { labels: data.categories, datasets: [{ data: data.categoryTotals, backgroundColor: ["#3158da", "#17c084", "#f59e0b", "#f43f5e", "#00a5ff", "#d7263d"] }] },
       options: { responsive: true, maintainAspectRatio: false, animation: { duration: 900 } },
     });
     new Chart(document.getElementById("monthlyBarChart"), { type: "bar", data: { labels: data.months, datasets: [{ label: "Monthly", data: data.monthly, backgroundColor: "#3259dc" }] }, options });
@@ -118,24 +118,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
   backdrop.addEventListener("click", clearFocus);
 
+  const toggleChartFocus = (chartCard) => {
+    const isFocused = chartCard.classList.contains("focused");
+    clearFocus();
+    if (!isFocused) {
+      dashboard?.classList.add("focus-mode");
+      chartCard.classList.add("focused");
+      backdrop.classList.add("active");
+    }
+  };
+
+  let lastTapAt = 0;
+  let lastTappedChart = null;
+
   document.querySelectorAll(".chart").forEach((chartCard) => {
-    chartCard.addEventListener("click", (e) => {
-      const isFocused = chartCard.classList.contains("focused");
-      clearFocus();
-      if (!isFocused) {
-        dashboard?.classList.add("focus-mode");
-        chartCard.classList.add("focused");
-        backdrop.classList.add("active");
-      }
-      e.stopPropagation();
+    chartCard.addEventListener("dblclick", (event) => {
+      toggleChartFocus(chartCard);
+      event.stopPropagation();
     });
+
+    chartCard.addEventListener("touchend", (event) => {
+      const now = Date.now();
+      const isDoubleTap = lastTappedChart === chartCard && (now - lastTapAt) < 320;
+      if (isDoubleTap) {
+        toggleChartFocus(chartCard);
+        event.preventDefault();
+        event.stopPropagation();
+        lastTapAt = 0;
+        lastTappedChart = null;
+        return;
+      }
+      lastTapAt = now;
+      lastTappedChart = chartCard;
+    }, { passive: false });
   });
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") clearFocus();
   });
-  
-const snapshotButton = document.getElementById("saveSnapshotBtn");
+
+  const snapshotButton = document.getElementById("saveSnapshotBtn");
   const snapshotModal = document.getElementById("snapshotPermissionModal");
   const snapshotContinueBtn = document.getElementById("snapshotContinueBtn");
   const snapshotCancelBtn = document.getElementById("snapshotCancelBtn");
