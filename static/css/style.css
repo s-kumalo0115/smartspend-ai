@@ -14,6 +14,7 @@
   --danger: #ff5f85;
   --shadow: 0 16px 40px rgba(0, 0, 0, .34);
   --glow: 0 0 0 1px rgba(96, 153, 255, .4), 0 12px 24px rgba(89, 173, 255, .28);
+  --topbar-offset: 112px;
 }
 
 body[data-theme="light"] {
@@ -49,7 +50,7 @@ body {
 }
 .hidden { display: none !important; }
 
-.section-wrap, .hero, .info-section, .topbar, .insights-panel, .dashboard, .profile-page, .app-footer {
+.section-wrap, .hero, .info-section, .insights-panel, .dashboard, .profile-page, .app-footer {
   width: min(1320px, calc(100% - 28px));
   max-width: 100%;
   margin-inline: auto;
@@ -372,7 +373,30 @@ body {
 .profile-dropdown a:hover { background: var(--surface-2); }
 
 /* DASHBOARD */
-.topbar { margin-top: 20px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 12px; display: grid; grid-template-columns: 1fr; gap: 12px; overflow: visible; position: relative; z-index: 300; isolation: isolate; }
+.topbar {
+  margin-top: 0;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: color-mix(in oklab, var(--surface), #000 5%);
+  backdrop-filter: blur(8px);
+  padding: 12px max(12px, calc((100vw - 1240px) / 2));
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  overflow: visible;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  isolation: isolate;
+}
 .topbar-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .topbar-primary-actions { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .topbar-actions { display: flex; align-items: center; gap: 10px; }
@@ -425,6 +449,9 @@ body {
   justify-content: flex-end;
   gap: 10px;
 }
+
+.topbar + .insights-panel,
+.topbar + .profile-page { margin-top: var(--topbar-offset); }
 
 .insights-panel { margin-top: 12px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 14px 16px; }
 .insights-panel ul { margin: 6px 0 0; color: var(--muted); }
@@ -654,7 +681,9 @@ body {
   .hero-intro { gap: 10px; }
   .hero-visual { min-height: 190px; }
   .upload-form-wrap { padding: 11px; }
-  .hero, .info-section, .topbar, .insights-panel, .dashboard, .app-footer, .profile-page { width: calc(100% - 12px); }
+  .hero, .info-section, .insights-panel, .dashboard, .app-footer, .profile-page { width: calc(100% - 12px); }
+  .topbar { padding-inline: 10px; }
+  :root { --topbar-offset: 130px; }
 
   .topbar { gap: 10px; }
   .dashboard-title { text-align: center; width: 100%; font-size: 1.2rem; color: var(--blue); padding-inline: 48px; }

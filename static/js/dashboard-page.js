@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Escape") clearFocus();
   });
   
-   const snapshotButton = document.getElementById("saveSnapshotBtn");
+const snapshotButton = document.getElementById("saveSnapshotBtn");
   const snapshotModal = document.getElementById("snapshotPermissionModal");
   const snapshotContinueBtn = document.getElementById("snapshotContinueBtn");
   const snapshotCancelBtn = document.getElementById("snapshotCancelBtn");
