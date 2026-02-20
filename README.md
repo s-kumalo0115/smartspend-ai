@@ -139,6 +139,25 @@ If category is missing, records default to `General`.
 
 ---
 
+## Deployment on Railway (step-by-step)
+
+This repository now includes a `railway.json` file so Railway uses the correct web process automatically.
+
+1. Push the project to GitHub.
+2. In Railway, create a new project from your repo.
+3. Railway will install dependencies from `requirements.txt`.
+4. Railway will start the app with:
+```bash
+gunicorn --bind 0.0.0.0:$PORT app:app
+```
+5. Add environment variables:
+- `SECRET_KEY` (required, secure random string)
+- `SMARTSPEND_DB` (optional custom DB path/name)
+- `MAX_UPLOAD_MB` (optional, default `8`)
+6. Deploy and test `/health`, CSV upload, profile save/load, and analysis save.
+
+---
+
 ## Deployment on Render (step-by-step)
 
 1. Push project to GitHub.
