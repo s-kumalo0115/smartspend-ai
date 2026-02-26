@@ -3,6 +3,8 @@
 Website 1: [https://smartspend-ai-production.up.railway.app/]
 website 2: [https://smartspend-ai-6oiq.onrender.com/]
 
+<img width="1858" height="886" alt="image" src="https://github.com/user-attachments/assets/ab579d2f-7abb-4997-9e80-71ec8699eb32" />
+
 SmartSpend AI is a polished Flask web app that turns raw expense CSVs into clear financial insights, interactive charts, and shareable analysis snapshots.
 
 It supports two modes:
